@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendReminderEmail;
+use App\User;
 use Illuminate\Http\Request;
 use Mews\Captcha\Captcha;
 
@@ -19,5 +21,13 @@ class IndexController extends Controller
         }catch (\Exception $e){
             \Log::error($e->getMessage());
         }
+    }
+    public function store()
+    {
+        $users=User::where('id','>',20)->get();
+        foreach ($users as $user){
+            $this->dispatch(new SendReminderEmail($user));
+        }
+        return 'Done';
     }
 }

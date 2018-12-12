@@ -23,3 +23,4 @@ Route::get('/queue',function (){
    dispatch(new \App\Jobs\TransferAccounts())->delay(Carbon::now()->addRealMinutes(1));
    dd(222);
 });
+Route::get('q','IndexController@store');
