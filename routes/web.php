@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use Carbon\Carbon;
 Route::get('/', function () {
     return view('index');
 });
@@ -18,3 +19,7 @@ Route::any('captcha', function()
     return captcha_src();
 })->middleware('web');
 Route::any('/TransferAccounts','IndexController@transferAccounts')->middleware('web');
+Route::get('/queue',function (){
+   dispatch(new \App\Jobs\TransferAccounts())->delay(Carbon::now()->addRealMinutes(1));
+   dd(222);
+});
