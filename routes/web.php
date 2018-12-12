@@ -10,15 +10,11 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-use Mews\Captcha\Captcha;
 Route::get('/', function () {
-    return captcha();
-//    return view('index');
+    return view('index');
 });
-Route::any('captcha-test', function(\Illuminate\Http\Request $request ,Captcha $captcha)
+Route::any('captcha', function()
 {
-    dd($captcha->check('dmfny'));
-    dd( $request->session()->all());
-
-   return captcha();
+    return captcha_src();
 })->middleware('web');
+Route::any('/TransferAccounts','IndexController@transferAccounts')->middleware('web');

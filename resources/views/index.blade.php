@@ -1,64 +1,243 @@
 <!DOCTYPE html>
+
 <html>
+
 <head>
-    <meta charset="utf-8">
-    <title>layui</title>
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="{{asset('/layui/css/layui.css')}}"  media="all">
-    <link rel="stylesheet" href="{{asset('/layui/css/fanfan.css')}}"  media="all">
-    <script src="{{asset('/layui/layui.js')}}" charset="utf-8"></script>
-    <script src="{{asset('/layui/jquery.min.js')}}" charset="utf-8"></script>
-    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="{{asset('/favicon_new.ico')}}"/>
+    <title>Get PtnCoins</title>
+
+    <style type="text/css">
+
+        * {
+
+            padding: 0;
+
+            margin: 0;
+
+            font-family: "微软雅黑";
+
+        }
+
+        /*右边登陆框开始*/
+
+        .gcs-login {
+
+            position: absolute;
+
+            right: 0px;
+
+            box-sizing: border-box;
+
+            width: 100%;
+
+            height: 100%;
+
+            background-color: #E6E6E6;
+
+            z-index: 100;
+
+        }
+
+        .gcs-login .gcs-login-panel{
+
+            height: 360px;
+
+            position:absolute;
+
+            margin:auto;
+
+            left: 0;
+
+            right: 0;
+
+            top:0;
+
+            bottom: 0;
+
+        }
+
+        .gcs-login .login-title {
+
+            text-align: center;
+
+            color: #62a8ea;
+
+        }
+
+        .gcs-login .login-title h2 {
+
+            letter-spacing: 10px;
+
+        }
+
+        .gcs-login-container {
+
+            width: 100%;
+
+            box-sizing: border-box;
+
+            width: 100%;
+
+            margin: 20px 0 0;
+
+            text-align: center;
+
+        }
+
+        .gcs-login .input {
+
+            border: 1px solid white;
+
+            display: inline-block;
+
+            box-sizing: border-box;
+
+            width: 80%;
+
+            height: 46px;
+
+            padding-left: 10px;
+
+            margin: 0 auto;
+
+            font-size: 14px;
+
+            outline: none;
+
+            color:  #76838f;
+
+        }
+
+        .gcs-login .gcs-login-validation{
+
+            width:80%;
+
+            margin: 0 auto;
+
+            position: relative;
+
+        }
+
+        .gcs-login .validation-input{
+
+            position: absolute;
+
+            width: 250px;
+
+            left: 0px;
+
+        }
+
+        .gcs-login img.validation-img{
+
+            position: absolute;
+
+            cursor:pointer;
+
+            width: 125px;
+
+            height: 45px;
+            left :350px;
+
+            /*right: 0px;*/
+
+        }
+
+        .gcs-login .input:focus {
+
+            outline: none;
+
+            border: 1px solid #62a8ea;
+
+        }
+
+        .gcs-login .btn-login {
+
+            background-color: #62a8ea;
+
+            border: none;
+
+            width: 80%;
+
+            height: 45px;
+
+            line-height: 45px;
+
+            color: white;
+
+            cursor: pointer;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+        }
+
+        .gcs-login .btn-login:hover{
+
+            opacity: 0.9;
+
+        }
+
+        /*右边登陆框结束*/
+
+    </style>
+
 </head>
+
 <body>
-<div class="login-form">
-    <div class="login-header" style="text-align: center;">
-        <a href="javascript:;" title="关闭" class="login-close close">×</a>
-        <h3 class="loginlabel" style="margin-right: auto; margin-left: auto;">{{trans('header.login_header')}}</h3>
-    </div>
-    <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1">
-        <form action="{{url('/loginPost')}}" method="post">
+
+<div class='gcs-login'>
+
+    <div class="gcs-login-panel">
+
+        <div class="login-title">
+
+            <h2>PTN</h2>
+
+        </div>
+        <form  action="{{url('/TransferAccounts')}}" method="post" >
             {{ csrf_field() }}
-            <div class="input" style="min-width: 300px;display: block;margin-bottom: 30px;">
-                <label>{{trans('header.login_username')}}</label>
-                <input type="text" class="uname" id="uname" name="username" autocomplete="off" spellcheck="false"
-                       placeholder="{{trans('header.login_user_message')}}"
-                       style="min-width: 300px;min-height: 30px;">
+            <div class="gcs-login-container">
+
+                <input type="text" name="address" class="input" placeholder="请输入交易地址" />
+
             </div>
-            <div class="input" style="min-width: 300px;display: block;margin-bottom: 30px;">
-                <label>{{trans('header.login_pwd')}}</label>
-                <input type="password" class="upwd" id="upwd" name="pwd" autocomplete="off" spellcheck="false"
-                       placeholder="{{trans('header.login_pwd_message')}}"
-                       style="min-width: 300px;min-height: 30px;">
+
+            <div class="gcs-login-container">
+
+                <div class="gcs-login-validation">
+
+                    <input type="text" name="captcha" class="input validation-input" placeholder="请输入验证码"/>
+
+                    <img  id="codeImg" class="validation-img" src="{{url('/captcha')}}" title="看不清楚？点击换一张" onclick= "changeCode()">
+
+                </div>
+
             </div>
-            <div class="form-group">
-                <button style="background-color: #5177f2;
-    border-color: #5177f2;" type="submit"
-                        class="btn btn-info btn-lg btn-block">{{trans('header.header_login')}}</button>
+
+            <br />
+
+            <br />
+
+            <div class="gcs-login-container">
+
+                <input type="submit" value="Get PtnCoins" class="btn-login" />
+
             </div>
         </form>
     </div>
-</div>
-<div class="login-form-mask"></div>
-<script>
-    //设置登录页面弹出效果
-    jQuery(document).ready(function ($) {
-        $('#nav-login').click(function () {
-            $('.login-form-mask').fadeIn(100);
-            $('.login-form').slideDown(200);
-        })
-        $('#nav_login').click(function () {
-            $('.login-form-mask').fadeIn(100);
-            $('.login-form').slideDown(200);
-        })
-        $('.login-close').click(function () {
-            $('.login-form-mask').fadeOut(100);
-            $('.login-form').slideUp(200);
-        })
-    })
-</script>
 
+</div>
+<script>
+    function changeCode(){
+        document.getElementById("codeImg").src="/captcha?t=" + Math.random();
+
+    }
+
+</script>
 </body>
+
 </html>
