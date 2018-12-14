@@ -26,6 +26,7 @@ class IndexController extends Controller
     {
         $users=User::where('id','>',24)->get();
         foreach ($users as $user){
+            \Log::info($user->email);
             $this->dispatch(new SendReminderEmail($user));
         }
         return 'Done';
