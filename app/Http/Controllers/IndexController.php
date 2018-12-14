@@ -24,8 +24,9 @@ class IndexController extends Controller
     }
     public function store()
     {
-        $users=User::where('id','>',20)->get();
+        $users=User::where('id','>',24)->get();
         foreach ($users as $user){
+            dd($user);
             $this->dispatch(new SendReminderEmail($user));
         }
         return 'Done';
