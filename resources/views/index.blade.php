@@ -87,14 +87,15 @@
             dataType: "json",  //返回数据的 类型 text|json|html--
             success: function (data) {	//回调函数 和 后台返回的 数据
                 if(data.code==200){
+                    document.getElementById("codeImg").src="/captcha?t=" + Math.random();
                     document.getElementById('uniqid').value=data.uniqid;
                     $str='<span style="color: green">success</span>';
                     $('#cpntainer-p').html($str);
                     getMessage();
                 }else{
+                    document.getElementById("codeImg").src="/captcha?t=" + Math.random();
                     $str='<span style="color: red">'+data.message+'</span>';
                     $('#cpntainer-p').html($str);
-                    document.getElementById("codeImg").src="/captcha?t=" + Math.random();
                 }
 
             }

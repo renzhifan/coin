@@ -30,5 +30,7 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::any('/q','IndexController@store');
 
+    Route::get('/test','IndexController@testAction');
+
 });
 
