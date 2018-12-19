@@ -38,7 +38,7 @@ class IndexController extends Controller
 
             //放入消息队列
 
-            $this->dispatch(new TransferAccounts($uniqid));
+            $this->dispatch(new TransferAccounts($uniqid,$fromAddress,$toAddress));
 
             return ['code'=>200,'uniqid'=>$uniqid];
         }catch (\Exception $e){

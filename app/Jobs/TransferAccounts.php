@@ -19,10 +19,14 @@ class TransferAccounts implements ShouldQueue
      * @return void
      */
     public $uniqid;
-    public function __construct($uniqid)
+    public $fromAddress;
+    public $toAddress;
+    public function __construct($uniqid,$fromAddress,$toAddress)
     {
         //
         $this->uniqid=$uniqid;
+        $this->fromAddress=$fromAddress;
+        $this->toAddress=$toAddress;
     }
 
     /**
