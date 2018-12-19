@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\TransactionRecord;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -17,9 +18,11 @@ class TransferAccounts implements ShouldQueue
      *
      * @return void
      */
-    public function __construct()
+    public $uniqid;
+    public function __construct($uniqid)
     {
         //
+        $this->uniqid=$uniqid;
     }
 
     /**
@@ -30,6 +33,7 @@ class TransferAccounts implements ShouldQueue
     public function handle()
     {
         //
-        \Log::info(123);
+        \Log::info($this->uniqid);
+        TransactionRecord::where('uniqid',$this->uniqid)->update(['data'=>$this->uniqid]);
     }
 }

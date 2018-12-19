@@ -10,17 +10,25 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-use Carbon\Carbon;
-Route::get('/', function () {
-    return view('index');
+
+
+Route::group(['middleware' => ['web']], function () {
+
+    //首页路由
+    Route::get('/', function () {
+        return view('index');
+    });
+    //获取验证码
+    Route::any('captcha', function()
+    {
+        return captcha_src();
+    });
+    //提交转币
+    Route::any('/TransferAccounts','IndexController@transferAccounts');
+    //通过唯一标识获取api的处理结果
+    Route::any('/getTransferRecord','IndexController@getTransferRecord');
+
+    Route::any('/q','IndexController@store');
+
 });
-Route::any('captcha', function()
-{
-    return captcha_src();
-})->middleware('web');
-Route::any('/TransferAccounts','IndexController@transferAccounts')->middleware('web');
-Route::get('/queue',function (){
-   dispatch(new \App\Jobs\TransferAccounts())->delay(Carbon::now()->addRealMinutes(1));
-   dd(222);
-});
-Route::get('q','IndexController@store');
+
