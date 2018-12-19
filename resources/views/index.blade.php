@@ -114,7 +114,7 @@
                     document.getElementById('returnData').value=data[0].data;
                 }else {
                     document.getElementById('returnData').value='正在获取数据。。。';
-                    setTimeout(getMessage(),3000);
+                    setTimeout(getMessage(),5000);
                 }
             }
         });

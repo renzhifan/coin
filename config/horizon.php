@@ -104,7 +104,7 @@ return [
             'supervisor-1' => [
                 'connection' => 'redis',
                 'queue' => ['default'],
-                'balance' => 'simple',
+                'balance' => 'false',
                 'processes' => 10,
                 'tries' => 3,
             ],
@@ -114,7 +114,7 @@ return [
             'supervisor-1' => [
                 'connection' => 'redis',
                 'queue' => ['default'],
-                'balance' => 'simple',
+                'balance' => 'false',
                 'processes' => 3,
                 'tries' => 3,
             ],
