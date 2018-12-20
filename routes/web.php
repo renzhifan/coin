@@ -28,9 +28,6 @@ Route::group(['middleware' => ['web']], function () {
     //通过唯一标识获取api的处理结果
     Route::any('/getTransferRecord','IndexController@getTransferRecord');
 
-    Route::any('/q','IndexController@store');
-
-    Route::get('/test','IndexController@testAction');
 
 });
 

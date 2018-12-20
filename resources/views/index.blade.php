@@ -52,7 +52,7 @@
 
             <div class="gcs-login-container">
 
-                <input type="button" value="Get PtnCoins" class="btn-login" />
+                <input type="button" value="Get PtnCoins" class="btn-login" is_click="0" onclick="cl($(this))"/>
 
             </div>
         <div class="gcs-login-container">
@@ -71,11 +71,26 @@
 
 </div>
 <script>
+
+    function cl(obj){
+        var is_click=obj.attr('is_click');
+        if(is_click==0){
+            obj.attr('is_click','1');
+            setTimeout(function(){
+                obj.attr('is_click','0');
+            },3000);
+        }else{
+            alert('请在间隔3秒后再次点击操作');
+        }
+    }
+
     function changeCode(){
         document.getElementById("codeImg").src="/captcha?t=" + Math.random();
 
     }
+
     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+
     $("input:button").click(function () {
         var fromAddress = $("#fromAddress").val();
         var toAddress = $("#toAddress").val();
@@ -102,6 +117,7 @@
         });
 
     });
+
     function getMessage() {
         var uniqid=document.getElementById('uniqid').value;
         $.ajax({
