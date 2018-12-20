@@ -40,34 +40,38 @@ class TransferAccounts implements ShouldQueue
         try{
             \Log::info($this->uniqid);
 
-            $postData=['jsonrpc'=>'2.0',
-                'method'=>'wallet_createPaymentTx',
-                'params'=>[$this->fromAddress,$this->toAddress,config('palletone.password'),config('palletone.limit')],
-                'id'=>1
+            $postData=["jsonrpc"=>"2.0",
+                "method"=>"wallet_getPtnTestCoin",
+                "params"=>["$this->fromAddress","$this->toAddress",config('palletone.limit'),config('palletone.password'),config('palletone.num')],
+                "id"=>1
             ];
             $postData=json_encode($postData);
             \Log::info($postData);
+            $data=$this->http_request(config('palletone.url'),$postData);
 
-            TransactionRecord::where('uniqid',$this->uniqid)->update(['data'=>$this->uniqid,'updated_at'=>date('Y-m-d H:i:s')]);
+            TransactionRecord::where('uniqid',$this->uniqid)->update(['data'=>$data,'updated_at'=>date('Y-m-d H:i:s')]);
 
         }catch (\Exception $e){
             \Log::error($e->getMessage());
         }
     }
 
-    public function http_request($url, $data = null)
+    public function http_request($url, $data_string = null)
     {
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
-        if (!empty($data)) {
-            curl_setopt($curl, CURLOPT_POST, 1);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS,$data_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            "Content-Type: application/json",
+            "Content-Length: " . strlen($data_string)
+        ));
+
+        $result = curl_exec($ch);
+        if (curl_errno($ch)) {
+            return  curl_error($ch);
         }
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-        $output = curl_exec($curl);
-        curl_close($curl);
-        return $output;
+        curl_close($ch);
+        return  $result;
     }
 }
