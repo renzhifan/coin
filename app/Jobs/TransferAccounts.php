@@ -42,12 +42,12 @@ class TransferAccounts implements ShouldQueue
 
             $postData=["jsonrpc"=>"2.0",
                 "method"=>"wallet_getPtnTestCoin",
-                "params"=>["$this->fromAddress","$this->toAddress","10","1",10],
+                "params"=>["$this->fromAddress","$this->toAddress",config("palletone.limit"),config("palletone.password"),config("palletone.num")],
                 "id"=>1
             ];
             $postData=json_encode($postData);
             \Log::info($postData);
-            $data=$this->http_request("http://124.251.111.61:8545",$postData);
+            $data=$this->http_request(config("palletone.url"),$postData);
 
             TransactionRecord::where('uniqid',$this->uniqid)->update(['data'=>$data,'updated_at'=>date('Y-m-d H:i:s')]);
 
