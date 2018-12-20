@@ -26,7 +26,7 @@ class IndexController extends Controller
             if(!$fromAddress || !$toAddress){
                 return ['code'=>400,'message'=>'请填写地址'];
             }
-            if($fromAddress[0] !== "P" || $toAddress[0] !== "P"){
+            if($fromAddress[0] !== "P" || $toAddress[0] !== "P" || !(preg_match('/^(1|3)[a-zA-Z\d]{24,33}$/', substr($fromAddress,1)) && preg_match('/^[^0OlI]{25,34}$/', substr($fromAddress,1))) || !(preg_match('/^(1|3)[a-zA-Z\d]{24,33}$/', substr($toAddress,1)) && preg_match('/^[^0OlI]{25,34}$/', substr($toAddress,1)))){
                 return ['code'=>400,'message'=>'您填写的地址不合法，请重新添加'];
             }
             if(!$captcha->check($captchaCode)){
