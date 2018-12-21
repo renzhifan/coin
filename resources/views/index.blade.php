@@ -6,7 +6,7 @@
 
     <meta charset="UTF-8">
     <link rel="shortcut icon" href="{{asset('/favicon_new.ico')}}"/>
-    <title>Ptncoin testnet3 faucet</title>
+    <title>PalletOne testnet faucet</title>
     <link href="{{asset('/layui/css/fanfan.css')}}" rel="stylesheet">
     <script src="{{asset('/js/app.js')}}" type="text/javascript"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -21,13 +21,13 @@
         <div class="login-title">
             <div class="gcs-login-container">
 
-            <p style="font-size: 40px;">Ptncoin testnet3 faucet</p>
+            <p style="font-size: 40px;">PalletOne testnet faucet</p>
             </div>
 
         </div>
             <div class="gcs-login-container">
 
-                <input type="text" id="toAddress" class="input" placeholder="Your testnet3 address" />
+                <input type="text" id="toAddress" class="input" placeholder="Your testnet address" />
 
             </div>
 
@@ -49,7 +49,7 @@
 
             <div class="gcs-login-container">
 
-                <input type="button" value="Get ptncoins" class="btn-login" is_click="0" onclick="cl($(this))"/>
+                <input type="button" value="Get PTN" class="btn-login" is_click="0" onclick="cl($(this))"/>
 
             </div>
         <div class="gcs-login-container">
