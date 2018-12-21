@@ -21,11 +21,11 @@ class TransferAccounts implements ShouldQueue
     public $uniqid;
     public $fromAddress;
     public $toAddress;
-    public function __construct($uniqid,$fromAddress,$toAddress)
+    public function __construct($uniqid,$toAddress)
     {
         //
         $this->uniqid=$uniqid;
-        $this->fromAddress=$fromAddress;
+        $this->fromAddress=config('palletone.fromaddress');
         $this->toAddress=$toAddress;
     }
 
