@@ -19,13 +19,16 @@ class TransferAccounts implements ShouldQueue
      * @return void
      */
     public $uniqid;
-    public $fromAddress;
     public $toAddress;
+    public $fromAddress="P19kW96FMGRwczYGxyizdAY6mWYLckADZdz";
+    public $url="http://124.251.111.62:8545";
+    public $limit="10";
+    public $password="1";
+    public $num=10;
     public function __construct($uniqid,$toAddress)
     {
         //
         $this->uniqid=$uniqid;
-        $this->fromAddress=config('palletone.fromaddress');
         $this->toAddress=$toAddress;
     }
 
@@ -42,12 +45,12 @@ class TransferAccounts implements ShouldQueue
 
             $postData=["jsonrpc"=>"2.0",
                 "method"=>"wallet_getPtnTestCoin",
-                "params"=>["$this->fromAddress","$this->toAddress",config("palletone.limit"),config("palletone.password"),config("palletone.num")],
+                "params"=>[$this->fromAddress,$this->toAddress,$this->limit,$this->password,$this->num],
                 "id"=>1
             ];
             $postData=json_encode($postData);
             \Log::info($postData);
-            $data=$this->http_request(config("palletone.url"),$postData);
+            $data=$this->http_request($this->url,$postData);
 
             TransactionRecord::where('uniqid',$this->uniqid)->update(['data'=>$data,'updated_at'=>date('Y-m-d H:i:s')]);
 
